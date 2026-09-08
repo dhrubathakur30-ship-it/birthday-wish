@@ -1,0 +1,388 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 🎂</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Segoe UI", sans-serif;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ffb6d9, #ffd6e7, #c8b6ff);
+}
+
+/* Pages */
+.page {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    transition: 0.8s ease;
+}
+
+.page.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1.1);
+}
+
+/* Card */
+.card {
+    width: min(92%, 550px);
+    padding: 40px 25px;
+    border-radius: 30px;
+    background: rgba(255,255,255,0.35);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    border: 2px solid rgba(255,255,255,0.6);
+    animation: cardIn 1.2s ease;
+}
+
+@keyframes cardIn {
+    from {
+        opacity: 0;
+        transform: translateY(60px) scale(.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.emoji {
+    font-size: 70px;
+    animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+    50% {
+        transform: translateY(-15px) rotate(5deg);
+    }
+}
+
+h1 {
+    color: #ff2f7d;
+    font-size: clamp(38px, 9vw, 65px);
+    margin: 15px 0;
+    text-shadow: 2px 3px white;
+}
+
+.name {
+    color: #8b35d6;
+    font-size: clamp(28px, 7vw, 45px);
+    margin-bottom: 20px;
+}
+
+.message {
+    color: #4b3158;
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    margin-top: 28px;
+    padding: 15px 35px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(45deg, #ff2f7d, #a83cff);
+    box-shadow: 0 8px 20px rgba(150,40,180,.3);
+    transition: .3s;
+}
+
+button:hover {
+    transform: translateY(-4px) scale(1.05);
+}
+
+/* Second page */
+.question {
+    font-size: clamp(28px, 7vw, 48px);
+    color: #8b35d6;
+    margin: 20px 0;
+}
+
+.flowers {
+    font-size: 45px;
+    letter-spacing: 8px;
+    animation: flowerFloat 2s infinite alternate;
+}
+
+@keyframes flowerFloat {
+    to {
+        transform: translateY(-10px);
+    }
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.yes {
+    background: linear-gradient(45deg, #ff3d8d, #ff75b5);
+}
+
+.no {
+    background: linear-gradient(45deg, #777, #aaa);
+}
+
+/* Floating hearts */
+.heart {
+    position: fixed;
+    bottom: -50px;
+    font-size: 25px;
+    animation: rise 6s linear infinite;
+    opacity: .8;
+}
+
+@keyframes rise {
+    from {
+        transform: translateY(0) rotate(0);
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Mobile */
+@media(max-width: 500px) {
+    .card {
+        padding: 30px 18px;
+    }
+
+    .emoji {
+        font-size: 55px;
+    }
+
+    .message {
+        font-size: 16px;
+    }
+
+    button {
+        width: 80%;
+        padding: 14px 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<section id="page1" class="page">
+
+    <div class="card">
+
+        <div class="emoji">🎂</div>
+
+        <h1>Happy Birthday!</h1>
+
+        <div class="name">
+            Salina 💖
+        </div>
+
+        <p class="message">
+            Wishing you a beautiful birthday filled with
+            happiness, laughter, wonderful memories
+            and lots of smiles! 🎉✨
+            <br><br>
+            May your special day be as amazing as you are. 🌷💗
+        </p>
+
+        <button onclick="continuePage()">
+            Continue ➜
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- PAGE 2 -->
+<section id="page2" class="page hidden">
+
+    <div class="card">
+
+        <div class="flowers">
+            🌷 🌷 🌷
+        </div>
+
+        <div class="emoji">💐</div>
+
+        <div class="question">
+            Will you be<br>
+            my best friend? 💖
+        </div>
+
+        <p class="message">
+            One simple question...<br>
+            but your answer means a lot! 😊
+        </p>
+
+        <div class="buttons">
+
+            <button class="yes" onclick="yesAnswer()">
+                YES 💖
+            </button>
+
+            <button class="no" id="noButton" onclick="noAnswer()">
+                NO 😅
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* Continue to second page */
+function continuePage() {
+
+    document.getElementById("page1")
+        .classList.add("hidden");
+
+    document.getElementById("page2")
+        .classList.remove("hidden");
+
+    confetti();
+}
+
+
+/* YES button */
+function yesAnswer() {
+
+    confetti();
+
+    setTimeout(() => {
+
+        alert("YAYYY! 💖🌷 You are officially my best friend! 🎉");
+
+    }, 300);
+
+}
+
+
+/* NO button */
+function noAnswer() {
+
+    const button = document.getElementById("noButton");
+
+    button.innerHTML = "Are you sure? 🥺";
+
+    setTimeout(() => {
+        button.innerHTML = "NO 😅";
+    }, 1500);
+
+}
+
+
+/* Confetti */
+function confetti() {
+
+    const pieces = [];
+
+    for(let i = 0; i < 120; i++) {
+
+        const piece = document.createElement("div");
+
+        piece.style.position = "fixed";
+        piece.style.width = "10px";
+        piece.style.height = "10px";
+        piece.style.background =
+            ["#ff2f7d","#8b35d6","#ffd700","#00c9ff","#ff6b6b"]
+            [Math.floor(Math.random()*5)];
+
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.top = "-20px";
+        piece.style.zIndex = "9999";
+        piece.style.borderRadius = "2px";
+
+        document.body.appendChild(piece);
+
+        const duration = 2000 + Math.random() * 2500;
+
+        piece.animate(
+            [
+                {
+                    transform:
+                    `translateY(0) rotate(0deg)`
+                },
+                {
+                    transform:
+                    `translateY(110vh) translateX(${Math.random()*200-100}px) rotate(720deg)`
+                }
+            ],
+            {
+                duration: duration,
+                easing: "cubic-bezier(.2,.7,.3,1)"
+            }
+        );
+
+        pieces.push(piece);
+    }
+
+    setTimeout(() => {
+        pieces.forEach(p => p.remove());
+    }, 5000);
+}
+
+
+/* Floating hearts */
+function createHeart() {
+
+    const heart = document.createElement("div");
+
+    heart.className = "heart";
+
+    heart.innerHTML =
+        ["💖","💕","💗","🌷","✨"]
+        [Math.floor(Math.random()*5)];
+
+    heart.style.left = Math.random()*100 + "vw";
+
+    heart.style.animationDuration =
+        (4 + Math.random()*4) + "s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 8000);
+}
+
+setInterval(createHeart, 600);
+
+
+/* Start birthday confetti */
+setTimeout(confetti, 500);
+
+</script>
+
+</body>
+</html>
+```
